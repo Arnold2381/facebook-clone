@@ -3,11 +3,17 @@ import { Card, CardContent, Typography } from '@material-ui/core';
 import './Message.css';
 const Message = forwardRef((props, ref) => {
   const isUser = props.username === props.message.username;
+  const isChatUser = props.message.username === props.chatUserName;
+
+  if (!isChatUser && !isUser && props.chatUserName !== 'None')
+    return <div></div>;
+
   const text = isUser
     ? props.message.text
     : props.message.username === ''
     ? 'Unknown User: ' + props.message.text
     : props.message.username + ': ' + props.message.text;
+
   return (
     <div ref={ref} className={isUser ? 'message_user' : 'message'}>
       <Card className={isUser ? 'message_userCard' : 'message_guestCard'}>
